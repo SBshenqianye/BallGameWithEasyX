@@ -438,5 +438,6 @@ extern void mainMenuControl(int *flag, int getKey);
 extern void rankMenu();
 extern void rankMenuDisplay(int flag);
 extern void rankMenuControl(int *flag, int getKey, bool *quit);
+extern void gameOverDisplay();
 /*Ω·Œ≤*/
 #endif

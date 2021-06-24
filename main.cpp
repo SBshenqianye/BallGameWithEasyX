@@ -168,6 +168,22 @@ void mainMenu()
 	}
 }
 
+void gameOverDisplay()
+{
+	LOGFONT titleFont = {0};
+	titleFont.lfHeight = 30;
+	titleFont.lfWeight = 1000;
+	titleFont.lfUnderline = true;
+
+	BeginBatchDraw();
+	BlackScreen();
+
+	settextstyle(&titleFont);		/*标题*/
+	settextcolor(RED);
+	outtextxy(WINDOW_WIDTH*5/16, WINDOW_HEIGHT - 6 * (OPTIONBAR_HEIGHT + OPTIONBAR_GAP), _T("请切换到控制台输入您的名字"));
+	FlushBatchDraw();
+}
+
 void rankMenuDisplay(int flag)
 {
 	GAMEDATA *item = HeadofData;
@@ -363,12 +379,13 @@ void initialization()
 		}
 		else
 		{
+			cout << "初始化成功" << endl;
 			fclose(fp);
 			if( (fp = fopen(".\\bin\\data\\rank.txt", "r")) == NULL)
 			{
 				cout << "无法打开文件.\\bin\\data\\rank.txt" << endl;
 			}
-			else fclose(fp_data);
+			else fclose(fp);
 		}
 	}
 	else fclose(fp);
@@ -433,6 +450,7 @@ void Gameing()
 		}
 	}/*for*/
 	
+	gameOverDisplay();
 	/*后续处理*/
 	writeIntoFile(HeadofData);
 	/*后续处理*/
@@ -613,7 +631,7 @@ void writeIntoFile(GAMEDATA *head)
 	saveToDebugFile(name);
 	
 	system("cls");
-
+	cout << "输入成功，可以切换回游戏界面了" << endl;
 	if(head == NULL)
 	{
 //		cout << "姓名\t" << "分数\t" << "排名" << endl;
