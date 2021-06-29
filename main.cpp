@@ -1,13 +1,18 @@
-
+/*作者：彭程斌*/
+/*日期：2021/6/1*/
+/*描述：包含程序绝大部分函数*/
+/*版本声明：此版本为v1.4*/
+/*最后修改日期：2021/6/29*/
+/*代码行数：717*/
 #include "HeadersForGame.h"
-#define OPTIONBAR_WIDTH WINDOW_WIDTH*3/20
-#define OPTIONBAR_HEIGHT WINDOW_HEIGHT/15
-#define OPTIONBAR_GAP WINDOW_HEIGHT/10
-#define TEXT_HEIGHT WINDOW_HEIGHT/20
-#define TEXT_GAP WINDOW_HEIGHT/40
+#define OPTIONBAR_WIDTH WINDOW_WIDTH*3/20	/*选项字体宽度		-	不可更改*/
+#define OPTIONBAR_HEIGHT WINDOW_HEIGHT/15	/*选项字体高度		-	不可更改*/
+#define OPTIONBAR_GAP WINDOW_HEIGHT/10		/*选项字体间隙		-	不可更改*/
+#define TEXT_HEIGHT WINDOW_HEIGHT/20		/*排行榜字体高度	-	不可更改*/
+#define TEXT_GAP WINDOW_HEIGHT/40			/*排行榜字体间隙	-	不可更改*/
 
-FILE *fp_data;
-GAMEDATA *HeadofData = NULL;
+FILE *fp_data;								/*数据文件结构体指针*/
+GAMEDATA *HeadofData = NULL;				/*数据链表头舒适化*/
 
 int main()
 {
@@ -29,6 +34,10 @@ int main()
 
 void BlackScreen()
 {
+	/*函数功能	涂黑屏幕*/
+	/*输入参数	无*/
+	/*返回值	无*/
+	/*调用关系	随意调用*/
 	setfillcolor(BLACK);
 	setlinecolor(BLACK);
 	fillrectangle(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -36,6 +45,10 @@ void BlackScreen()
 
 void mainMenuDisplay(int flag)
 {
+	/*函数功能	显示主菜单*/
+	/*输入参数	选项*/
+	/*返回值	无*/
+	/*调用关系	只被mainMenu()调用*/
 	BeginBatchDraw();
 	LOGFONT titleFont = {0}, optionFont = {0}, tipsFont = {0};
 	titleFont.lfHeight = 120;
@@ -109,6 +122,10 @@ void mainMenuDisplay(int flag)
 
 void mainMenuControl(int *flag, int getKey)
 {
+	/*函数功能	控制主菜单选择*/
+	/*输入参数	选项、键盘输入	输出参数	选项*/
+	/*返回值	无*/
+	/*调用关系	只被mainMenu()调用*/
 	switch(getKey)
 	{
 	case 'W':
@@ -158,6 +175,10 @@ void mainMenuControl(int *flag, int getKey)
 
 void mainMenu()
 {
+	/*函数功能	调用控制菜单与显示菜单函数*/
+	/*输入参数	无*/
+	/*返回值	无*/
+	/*调用关系	只被mainMenu()调用*/
 	int flag = 1, getKey;
 	for(;;)
 	{
@@ -170,6 +191,10 @@ void mainMenu()
 
 void gameOverDisplay()
 {
+	/*函数功能	显示游戏结束画面*/
+	/*输入参数	无*/
+	/*返回值	无*/
+	/*调用关系	被gaming()调用*/
 	LOGFONT titleFont = {0};
 	titleFont.lfHeight = 30;
 	titleFont.lfWeight = 1000;
@@ -186,6 +211,10 @@ void gameOverDisplay()
 
 void rankMenuDisplay(int flag)
 {
+	/*函数功能	显示排行榜*/
+	/*输入参数	第一个显示的数据*/
+	/*返回值	无*/
+	/*调用关系	被rankMenu()调用*/
 	GAMEDATA *item = HeadofData;
 	LOGFONT titleFont = {0}, optionFont = {0}, tipsFont = {0};
 	int i;
@@ -243,6 +272,10 @@ void rankMenuDisplay(int flag)
 
 void rankMenuControl(int *flag, int getKey, bool *quit)
 {
+	/*函数功能	控制排行榜第一个显示的数据*/
+	/*输入参数	第一个显示的数据、键盘信息、退出菜单判断	输出参数	第一个显示的数据、退出菜单判断*/
+	/*返回值	无*/
+	/*调用关系	被rankMenu()调用*/
 	switch(getKey)
 	{
 	default:
@@ -271,6 +304,11 @@ void rankMenuControl(int *flag, int getKey, bool *quit)
 
 void rankMenu()
 {
+	/*函数功能	集中调用排行榜控制与显示函数*/
+	/*输入参数	无*/
+	/*输出参数	无*/
+	/*返回值	无*/
+	/*调用关系	被mainMenu()调用*/
 	int flag = 1, getKey;
 	bool quit = false;
 
@@ -288,6 +326,11 @@ void rankMenu()
 
 void Bin()
 {
+	/*函数功能	装被丢弃或者可能有用的语句*/
+	/*输入参数	无*/
+	/*输出参数	无*/
+	/*返回值	无*/
+	/*调用关系	随便调用*/
 	setfillcolor(YELLOW);
 	solidrectangle(WINDOW_WIDTH/2 - OPTIONBAR_WIDTH/2, WINDOW_HEIGHT - (OPTIONBAR_HEIGHT + OPTIONBAR_GAP), 
 		WINDOW_WIDTH/2 + OPTIONBAR_WIDTH/2, WINDOW_HEIGHT - OPTIONBAR_GAP);
@@ -304,6 +347,11 @@ void Bin()
 
 void debugAndTest()
 {
+	/*函数功能	调试与测试*/
+	/*输入参数	无*/
+	/*输出参数	无*/
+	/*返回值	无*/
+	/*调用关系	随便调用*/
 
 	system("title %time%");
 
@@ -311,6 +359,11 @@ void debugAndTest()
 
 FILE *createDebugFile()
 {
+	/*函数功能	创建存放debug消息的文件*/
+	/*输入参数	无*/
+	/*输出参数	无*/
+	/*返回值	指向FILE类型的指针*/
+	/*调用关系	被initialization()调用*/
 	FILE *fp;
 	time_t rawtime;
 	struct tm *info;
@@ -330,6 +383,11 @@ FILE *createDebugFile()
 
 void initialization()
 {
+	/*函数功能	初始化文件信息（包括debug文件夹与data文件夹等等）*/
+	/*输入参数	无*/
+	/*输出参数	无*/
+	/*返回值	无*/
+	/*调用关系	被main()调用*/
 	int flag;
 	FILE *fp;
 	/*创建bin文件夹*/
@@ -388,12 +446,21 @@ void initialization()
 			else fclose(fp);
 		}
 	}
-	else fclose(fp);
+	else 
+	{
+		cout << "初始化成功" << endl;
+		fclose(fp);
+	}
 	/*检测rank.txt是否存在*/
 }
 
 void Gameing()
 {
+	/*函数功能	游戏主体函数*/
+	/*输入参数	无*/
+	/*输出参数	无*/
+	/*返回值	无*/
+	/*调用关系	被main()调用*/
 	BlackScreen();
 	Brick *HeadOfBricks = NULL;
 	Borad borad;
@@ -458,6 +525,11 @@ void Gameing()
 
 Brick *createBrick(Brick *head)
 {
+	/*函数功能	生成砖块*/
+	/*输入参数	砖块链表头*/
+	/*输出参数	无*/
+	/*返回值	新砖块链表头*/
+	/*调用关系	被gaming()调用*/
 	Brick *thisNode, *item = head;
 	int Pos_x = rand() % 10;
 	bool foundPos = false;			/*foundPos为false意味着没有给砖块找到合适的位置*/
@@ -500,6 +572,11 @@ Brick *createBrick(Brick *head)
 
 bool allBrickMove(Brick *head)
 {
+	/*函数功能	使所有砖块运动*/
+	/*输入参数	转块链表头*/
+	/*输出参数	无*/
+	/*返回值	判断停止游戏*/
+	/*调用关系	被gaming()调用*/
 	bool stopGame = false;
 	while(head != NULL)
 	{
@@ -511,6 +588,11 @@ bool allBrickMove(Brick *head)
 
 Brick *removeBrick(Brick *head)
 {
+	/*函数功能	从链表中移除被打掉的砖块*/
+	/*输入参数	砖块链表头*/
+	/*输出参数	无*/
+	/*返回值	新砖块链表头*/
+	/*调用关系	被gaming()调用*/
 	Brick *temp;
 	Brick *lastItem;
 	Brick *item;
@@ -555,6 +637,11 @@ Brick *removeBrick(Brick *head)
 
 GAMEDATA *readFromFile()
 {
+	/*函数功能	读取排行榜信息到链表*/
+	/*输入参数	无*/
+	/*输出参数	无*/
+	/*返回值	排行榜链表头*/
+	/*调用关系	被多个函数调用*/
 	GAMEDATA *head = NULL;
 	GAMEDATA *gamedata, *thisNode, *lastNode;
 	gamedata = new GAMEDATA;
@@ -597,6 +684,11 @@ GAMEDATA *readFromFile()
 
 void freeMemory(GAMEDATA *head)
 {
+	/*函数功能	释放内存*/
+	/*输入参数	排行榜链表头*/
+	/*输出参数	无*/
+	/*返回值	无*/
+	/*调用关系	无*/
 	GAMEDATA *item = head, *temp = head->next;
 	if(head == NULL)
 	{
@@ -614,8 +706,14 @@ void freeMemory(GAMEDATA *head)
 		}
 	}
 }
+
 void writeIntoFile(GAMEDATA *head)
 {
+	/*函数功能	将排行榜链表写入到文件*/
+	/*输入参数	排行榜链表头*/
+	/*输出参数	无*/
+	/*返回值	无*/
+	/*调用关系	被gaming()调用*/
 	GAMEDATA *gamedata, *lastNode, *item;
 	lastNode = head;
 	gamedata = new GAMEDATA;
@@ -663,6 +761,11 @@ void writeIntoFile(GAMEDATA *head)
 
 GAMEDATA *Rankthem(GAMEDATA *head)
 {
+	/*函数功能	给排行榜排序*/
+	/*输入参数	排行榜链表头*/
+	/*输出参数	无*/
+	/*返回值	新排行榜链表头*/
+	/*调用关系	被多个函数调用*/
 	GAMEDATA *thisNode, *nextNode;
 	DATA temp;
 	int i = 1;

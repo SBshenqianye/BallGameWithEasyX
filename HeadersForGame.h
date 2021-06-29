@@ -1,4 +1,9 @@
-
+/*作者：彭程斌*/
+/*日期：2021/6/1*/
+/*描述：包含程序绝大部分类声明和宏定义*/
+/*版本声明：此版本为v1.4*/
+/*最后修改日期：2021/6/29*/
+/*代码行数：448*/
 #ifndef _HEADERANDDEFS_H
 #define _HEADERANDDEFS_H
 /*开始*/
@@ -31,19 +36,20 @@ using namespace std;
 /*Global Defines*/
 const int WINDOW_HEIGHT = 600;				/*默认为600*/
 const int WINDOW_WIDTH = 800;				/*默认为800*/
-FILE *fp_debug;
-char pathname_debug[50] = ".\\bin\\debug\\";
-int count = 0;
-float score = 0;
-int numKnock = 0;
-int times = 0;
-int rank = 1;
-float DegreeofDifficulty = OVERALL_RUNNING_SPEED*1/2 * BRICK_DROP_SPEED;
-char name[21] = "\0";
+FILE *fp_debug;								/*用于储存debug信息的文件指针*/
+char pathname_debug[50] = ".\\bin\\debug\\";/*定义文件夹名称*/
+int count = 0;								/*砖块生成数量*/
+float score = 0;							/*分数*/
+int numKnock = 0;							/*击碎砖块数量*/
+int times = 0;								/*时间*/
+int rank = 1;								/*默认排名*/
+float DegreeofDifficulty = OVERALL_RUNNING_SPEED*1/2 * BRICK_DROP_SPEED;/*难度系数*/
+char name[21] = "\0";									/*玩家姓名*/
 
 /*Fuction in Objects*/
 extern void saveToDebugFile(char *sentence)
 {
+
 	fprintf(fp_debug, sentence);
 	fclose(fp_debug);
 	if((fp_debug = fopen(pathname_debug, "a+")) == NULL)
